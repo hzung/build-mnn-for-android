@@ -1,8 +1,14 @@
 ### How to build the [MNN library](https://github.com/alibaba/MNN) and make the demo Android app work. I build the library using Docker so these steps should work for Windows, Linux, MacOS.
 
-**Step 1.** Download [android-ndk-r21d](https://dl.google.com/android/repository/android-ndk-r21d-linux-x86_64.zip) and extract to the directory `build-mnn-for-android/android-ndk-r21d`
+**Step 1.** Clone this repository
 
-**Step 2.** Clone the repository [https://github.com/alibaba/MNN](https://github.com/alibaba/MNN) into `build-mnn-for-android/MNN`
+```
+git clone git@github.com:hzung/build-mnn-for-android.git
+```
+
+**Step 2.** Download [android-ndk-r21d](https://dl.google.com/android/repository/android-ndk-r21d-linux-x86_64.zip) and extract to the directory `build-mnn-for-android/android-ndk-r21d`
+
+**Step 3.** Clone the repository [https://github.com/alibaba/MNN](https://github.com/alibaba/MNN) into `build-mnn-for-android/MNN`
 
 The final folder structure should look like this:
 
@@ -30,14 +36,14 @@ The final folder structure should look like this:
 ...
 ```
 
-**Step 3.** Build the building environment image
+**Step 4.** Build the building environment image
 
 ```
 cd build-mnn-for-android
 docker image build -t build_mnn_env:v01 .
 ```
 
-**Step 4.** Start the container `build_mnn`
+**Step 5.** Start the container `build_mnn`
 
 ```
 docker container run \
@@ -48,7 +54,7 @@ docker container run \
 -td build_mnn_env:v01
 ```
 
-**Step 5.** Access to the shell of container `build_mnn`
+**Step 6.** Access to the shell of container `build_mnn`
 
 ```
 docker exec -it build_mnn /bin/bash
@@ -68,12 +74,12 @@ cd project/android
 mkdir build_64 && cd build_64 && ../build_64.sh
 ```
 
-**Step 6.** Exit the shell of the container `build_mnn`
+**Step 7.** Exit the shell of the container `build_mnn`
 
-**Step 7.** Create the folder `MNN/demo/android/app/libs/arm64-v8a` copy the file `MNN/project/android/build_64/libMNN.so` into it.
+**Step 8.** Create the folder `MNN/demo/android/app/libs/arm64-v8a` copy the file `MNN/project/android/build_64/libMNN.so` into it.
 Here is the path of the file: `MNN/demo/android/app/libs/arm64-v8a/libMNN.so`
 
-**Step 8.** Update abiFilters in the build.gradle `MNN/demo/android/app/build.gradle` to `arm64-v8a`
+**Step 9.** Update abiFilters in the build.gradle `MNN/demo/android/app/build.gradle` to `arm64-v8a`
 
 ```
 ...
@@ -91,7 +97,7 @@ buildTypes {
 ...
 ```
 
-**Step 9.** Open the file `MNN/demo/android/app/src/main/java/com/taobao/android/mnndemo/VideoActivity.java`, added the check null code to the onResume method.
+**Step 10.** Open the file `MNN/demo/android/app/src/main/java/com/taobao/android/mnndemo/VideoActivity.java`, added the check null code to the onResume method.
 
 ```
 ...
